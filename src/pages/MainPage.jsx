@@ -14,6 +14,9 @@ function MainPage() {
           image={product.mainImage}
           price={product.price}
           category={product.spaceCategory}
+          description={product.description}
+          maximum={product.maximumPurchases}
+          date={product.registrationDate}
         />
       ))}
     </Grid>
