@@ -18,6 +18,8 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from '@chakra-ui/react';
+import { useDispatch } from 'react-redux';
+import { cartActions } from '../redux-toolkit/cart';
 
 function ProductItem({
   idx,
@@ -30,11 +32,27 @@ function ProductItem({
   date,
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const dispatch = useDispatch();
+
+  const addToCartHandler = () => {
+    dispatch(
+      cartActions.addToCart({
+        idx,
+        name,
+        image,
+        price,
+        category,
+        description,
+        maximum,
+        date,
+      })
+    );
+  };
 
   return (
     <>
-      <Card maxW='sm' onClick={onOpen} cursor='pointer'>
-        <CardBody>
+      <Card maxW='sm'>
+        <CardBody onClick={onOpen} cursor='pointer'>
           <Image src={image} alt={name} borderRadius='lg' />
           <Stack mt='6' spacing='3'>
             <Heading size='md'>{name}</Heading>
@@ -51,7 +69,7 @@ function ProductItem({
         </CardBody>
         <Divider />
         <CardFooter display='flex' justify='flex-end'>
-          <Button variant='solid' colorScheme='blue'>
+          <Button variant='solid' colorScheme='blue' onClick={addToCartHandler}>
             예약
           </Button>
         </CardFooter>
